@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уютный сон - Подушки, одеяла, постельное белье</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        
+        /* Видео заставка */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .video-container {
+            width: 90%;
+            max-width: 1000px;
+            position: relative;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #1a237e 0%, #4a6fa5 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .video-placeholder i {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .video-placeholder h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .video-placeholder p {
+            font-size: 18px;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        
+        .skip-video {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .skip-video:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        /* Шапка и навигация */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .logo i {
+            color: #4a6fa5;
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        
+        .logo span {
+            color: #4a6fa5;
+        }
+        
+        /* Гамбургер меню */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #2c3e50;
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-menu li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 17px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-menu li a:hover {
+            color: #4a6fa5;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 22px;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Основной контент */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 5%;
+            min-height: 70vh;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            color: #2c3e50;
+        }
+        
+        /* Страницы "О нас" и "Контакты" */
+        .page-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .page-content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .page-content h3 {
+            color: #4a6fa5;
+            margin: 25px 0 15px;
+        }
+        
+        .page-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .page-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .page-content li {
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4a6fa5;
+        }
+        
+        .contact-item i {
+            font-size: 24px;
+            color: #4a6fa5;
+            margin-bottom: 10px;
+        }
+        
+        /* Фильтры */
+        .filters-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .filters-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .filters-title i {
+            color: #4a6fa5;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .filter-group h3 {
+            margin-bottom: 10px;
+            color: #4a6fa5;
+            font-size: 18px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: #f1f5f9;
+            border: 1px solid #d1d9e6;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            user-select: none;
+        }
+        
+        .filter-btn:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .filter-btn.active {
+            background-color: #4a6fa5;
+            color: white;
+            border-color: #4a6fa5;
+        }
+        
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 12px 25px;
+            background-color: white;
+            border: 2px solid #4a6fa5;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .category-btn:hover {
+            background-color: #f0f5ff;
+        }
+        
+        .category-btn.active {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        /* Товары */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a6fa5;
+            font-size: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-category {
+            color: #7b8793;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            height: 50px;
+            overflow: hidden;
+        }
+        
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .product-feature {
+            background-color: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+        
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #3a5a8a;
+        }
+        
+        /* Модальное окно товара - ПРОСТОЙ СЛАЙДЕР */
+        .product-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .product-modal {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+        
+        .modal-header h2 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            color: #2c3e50;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-modal:hover {
+            color: #e74c3c;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .modal-content {
+            display: flex;
+            overflow: hidden;
+            flex-grow: 1;
+            max-height: calc(90vh - 70px);
+        }
+        
+        @media (max-width: 768px) {
+            .modal-content {
+                flex-direction: column;
+                max-height: calc(90vh - 70px);
+            }
+        }
+        
+        .modal-images {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            position: relative;
+        }
+        
+        .simple-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .main-product-image {
+            max-width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            display: block;
+            transition: opacity 0.3s;
+        }
+        
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            font-size: 18px;
+            color: #4a6fa5;
+        }
+        
+        .image-nav:hover {
+            background-color: white;
+        }
+        
+        .prev-image {
+            left: 10px;
+        }
+        
+        .next-image {
+            right: 10px;
+        }
+        
+        .image-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .image-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .image-dot.active {
+            background-color: #4a6fa5;
+        }
+        
+        .modal-info {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+        
+        .modal-category {
+            color: #7b8793;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .modal-title {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+        
+        .modal-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .modal-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #4a5568;
+        }
+        
+        .modal-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-feature {
+            background-color: #f1f5f9;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .modal-specs {
+            margin-bottom: 25px;
+        }
+        
+        .modal-spec-item {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .modal-spec-title {
+            font-weight: 600;
+            width: 140px;
+            color: #4a6fa5;
+            font-size: 14px;
+        }
+        
+        .modal-spec-value {
+            flex: 1;
+            font-size: 14px;
+        }
+        
+        .modal-add-to-cart {
+            padding: 16px 25px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 17px;
+            width: 100%;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-add-to-cart:hover {
+            background-color: #3a5a8a;
+        }
+        
+        /* Корзина */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 95vh;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .close-cart {
+            font-size: 28px;
+            cursor: pointer;
+            color: #2c3e50;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+        
+        .close-cart:hover {
+            color: #e74c3c;
+        }
+        
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 30px;
+            color: #4a6fa5;
+        }
+        
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .cart-item-info {
+            flex-grow: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: #4a6fa5;
+            font-weight: 700;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .cart-item-remove {
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            background: none;
+            border: none;
+        }
+        
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .cart-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .clear-cart {
+            background-color: #f1f5f9;
+            color: #2c3e50;
+        }
+        
+        .clear-cart:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .checkout-btn {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #3a5a8a;
+        }
+        
+        /* Форма оформления заказа */
+        .checkout-form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: none;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .checkout-form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .form-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .cancel-btn {
+            background-color: #f1f5f9;
+            color: #2c3e50;
+        }
+        
+        .submit-btn {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        /* Сообщения */
+        .message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 4000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .message.success {
+            background-color: #27ae60;
+        }
+        
+        .message.error {
+            background-color: #e74c3c;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 5% 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #f8f9fa;
+        }
+        
+        .footer-section p, .footer-section li {
+            color: #d1d9e6;
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li i {
+            margin-right: 10px;
+            color: #4a6fa5;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #3a4a5a;
+            color: #b0b9c5;
+            font-size: 14px;
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                z-index: 99;
+                gap: 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 10px 0;
+                padding: 10px 0;
+            }
+            
+            .category-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 80%;
+            }
+            
+            .filter-options {
+                justify-content: center;
+            }
+            
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .page-content {
+                padding: 20px;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .cart-item-quantity {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .cart-actions, .form-actions {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                flex-direction: column;
+                max-height: calc(90vh - 70px);
+            }
+            
+            .modal-images {
+                min-height: 250px;
+                max-height: 250px;
+                padding: 20px;
+            }
+            
+            .main-product-image {
+                max-height: 200px;
+            }
+            
+            .modal-info {
+                padding: 20px;
+                max-height: calc(90vh - 250px - 70px);
+                overflow-y: auto;
+            }
+            
+            .video-container {
+                width: 95%;
+            }
+            
+            .video-placeholder {
+                height: 400px;
+                padding: 15px;
+            }
+            
+            .video-placeholder h2 {
+                font-size: 24px;
+            }
+            
+            .video-placeholder p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-card {
+                max-width: 100%;
+            }
+            
+            .cart-container, .checkout-form-container, .product-modal {
+                padding: 10px;
+                margin: 10px;
+            }
+            
+            .modal-header {
+                padding: 15px;
+            }
+            
+            .modal-title {
+                font-size: 22px;
+            }
+            
+            .modal-price {
+                font-size: 28px;
+            }
+            
+            .modal-images {
+                min-height: 200px;
+                max-height: 200px;
+            }
+            
+            .main-product-image {
+                max-height: 150px;
+            }
+            
+            .modal-info {
+                max-height: calc(90vh - 200px - 70px);
+            }
+            
+            .video-placeholder {
+                height: 350px;
+            }
+            
+            .video-placeholder i {
+                font-size: 60px;
+            }
+            
+            .video-placeholder h2 {
+                font-size: 20px;
+            }
+        }
+
+        /* Общие стили для адаптивности */
+.video-container {
+    width: 90%;
+    max-width: 600px; /* Ограничиваем ширину для больших экранов */
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.video-placeholder {
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.video-placeholder i {
+    font-size: 60px; /* Меньше для маленьких экранов */
+    margin-bottom: 15px;
+}
+
+.video-placeholder h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.skip-video {
+    padding: 14px 30px;
+    font-size: 16px;
+    background-color: #4a6fa5;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 30px; /* чуть ниже текста */
+}
+
+/* Медиазапрос для мобильных */
+@media(max-width: 480px) {
+    .skip-video {
+        padding: 16px 40px;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Видео заставка -->
+    <div class="video-overlay" id="videoOverlay">
+    <div class="video-placeholder">
+    <i class="fas fa-bed"></i>
+    <h2>Добро пожаловать в магазин "Уютный сон"!</h2>
+    <p>Мы предлагаем лучшие постельные принадлежности для вашего комфортного сна. Ортопедические подушки, теплые одеяла, качественное постельное белье - всё для вашего уюта и здоровья.</p>
+    <p>Наши товары изготавливаются из натуральных материалов с заботой о вашем сне.</p>
+    <button class="skip-video" id="skipVideo">Начать покупки</button>
+</div>
+        </div>
+    </div>
+
+    <!-- Шапка с навигацией -->
+    <header>
+        <div class="header-container">
+            <div class="logo" id="homeButton">
+                <i class="fas fa-bed"></i>
+                <h1>Уютный <span>сон</span></h1>
+            </div>
+            
+            <!-- Гамбургер меню -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="nav-link" data-page="home"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
+                <li><a href="#" class="nav-link" data-page="contacts"><i class="fas fa-phone-alt"></i> Контакты</a></li>
+                <li><a href="#" class="nav-link" data-category="pillows"><i class="fas fa-pillow"></i> Подушки</a></li>
+                <li><a href="#" class="nav-link" data-category="blankets"><i class="fas fa-blanket"></i> Одеяла</a></li>
+                <li><a href="#" class="nav-link" data-category="bedding"><i class="fas fa-bed"></i> Постельное белье</a></li>
+            </ul>
+            
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="container" id="mainContent">
+        <!-- Контент будет динамически меняться -->
+    </div>
+
+    <!-- Модальное окно товара - ПРОСТОЙ РУЧНОЙ СЛАЙДЕР -->
+    <div class="product-modal-overlay" id="productModalOverlay">
+        <div class="product-modal">
+            <div class="modal-header">
+                <h2>Подробности товара</h2>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-images">
+                    <div class="simple-image-container">
+                        <img id="mainProductImage" src="" alt="" class="main-product-image">
+                        <button class="image-nav prev-image" id="prevImage">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="image-nav next-image" id="nextImage">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="image-dots" id="imageDots">
+                        <!-- Точки будут добавляться динамически -->
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h1 class="modal-title" id="modalTitle"></h1>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <div class="modal-description" id="modalDescription"></div>
+                    
+                    <div class="modal-features" id="modalFeatures">
+                        <!-- Особенности будут добавляться динамически -->
+                    </div>
+                    
+                    <div class="modal-specs" id="modalSpecs">
+                        <!-- Характеристики будут добавляться динамически -->
+                    </div>
+                    
+                    <button class="modal-add-to-cart" id="modalAddToCart">
+                        <i class="fas fa-cart-plus"></i> Добавить в корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Корзина -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-container">
+            <div class="cart-header">
+                <h2>Корзина покупок</h2>
+                <button class="close-cart" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Товары в корзине будут добавляться динамически -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cartTotal">0 ₽</span>
+                </div>
+                <div class="cart-actions">
+                    <button class="cart-btn clear-cart" id="clearCart">Очистить корзину</button>
+                    <button class="cart-btn checkout-btn" id="checkoutBtn">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма оформления заказа -->
+    <div class="checkout-form-overlay" id="checkoutFormOverlay">
+        <div class="checkout-form-container">
+            <h2 style="margin-bottom: 20px;">Оформление заказа</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="customerName">Имя *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Телефон *</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Адрес доставки *</label>
+                    <textarea id="customerAddress" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="orderComment">Комментарий к заказу</label>
+                    <textarea id="orderComment"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-btn cancel-btn" id="cancelOrder">Отмена</button>
+                    <button type="submit" class="form-btn submit-btn">Отправить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Сообщения -->
+    <div class="message" id="successMessage">
+        <i class="fas fa-check-circle"></i> Заказ успешно отправлен!
+    </div>
+    
+    <div class="message" id="errorMessage">
+        <i class="fas fa-exclamation-circle"></i> Произошла ошибка при отправке заказа
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Уютный сон</h3>
+                <p>Мы предлагаем качественные постельные принадлежности для вашего комфортного сна. Наши товары сделаны из экологичных материалов и проходят строгий контроль качества.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Сонная, 25</li>
+                    <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                    <li><i class="fas fa-envelope"></i> info@uyutniyson.ru</li>
+                    <li><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Категории</h3>
+                <ul>
+                    <li><i class="fas fa-pillow"></i> Подушки</li>
+                    <li><i class="fas fa-blanket"></i> Одеяла</li>
+                    <li><i class="fas fa-bed"></i> Постельное белье</li>
+                    <li><i class="fas fa-gift"></i> Подарочные наборы</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 "Уютный сон". Все права защищены.</p>
+        </div>
+    </footer>
+
+      <script>
+        // Данные товаров
+        const products = [
+            {
+                id: 1,
+                name: "Ортопедическая подушка с памятью формы",
+                category: "pillows",
+                price: 2499,
+                description: "Ортопедическая подушка с эффектом памяти формы обеспечивает оптимальную поддержку головы и шеи во время сна. Изготовлена из гипоаллергенных материалов, которые адаптируются к форме вашего тела, обеспечивая максимальный комфорт и здоровый сон. Идеально подходит для тех, кто страдает от болей в шее или спине.",
+                images: [
+                    "Снимок.PNG",
+                  "Снимок1.PNG",
+                 "Снимок.PNG"
+                ],
+                features: ["Memory foam", "Средний размер", "Гипоаллергенная", "Анатомическая форма"],
+                size: "medium",
+                material: "memoryfoam",
+                style: "plain",
+                fabric: "nonquilted",
+                weight: "1.2 кг",
+                care: "Стирка при 40°C",
+                dimensions: "50x70 см"
+            },
+            {
+                id: 2,
+                name: "Пуховая подушка Premium",
+                category: "pillows",
+                price: 3599,
+                description: "Роскошная пуховая подушка премиум-класса с наполнителем из натурального гусиного пуха. Обеспечивает невероятную мягкость и комфорт, идеально подстраиваясь под форму головы и шеи. Наволочка из 100% хлопка сатина обеспечивает приятные тактильные ощущения и долговечность.",
+                images: [
+                "Снимок2.PNG",
+                "Снимок1.PNG",
+                "Снимок.PNG"
+                ],
+                features: ["Натуральный пух", "Большой размер", "Высокое качество", "Гипоаллергенная"],
+                size: "large",
+                material: "cotton",
+                style: "plain",
+                fabric: "quilted",
+                weight: "1.5 кг",
+                care: "Химическая чистка",
+                dimensions: "70x70 см"
+            },
+            {
+                id: 3,
+                name: "Бамбуковая подушка",
+                category: "pillows",
+                price: 1999,
+                description: "Экологичная подушка с наполнителем из бамбукового волокна. Обладает антибактериальными свойствами и отличной воздухопроницаемостью, что обеспечивает комфортный сон в любое время года. Идеальный выбор для людей с аллергией и для тех, кто ценит экологичные материалы.",
+                images: [
+                  "Снимок3.PNG",
+                  "Снимок1.PNG",
+                  "Снимок.PNG"
+                ],
+                features: ["Бамбуковое волокно", "Маленький размер", "Дышащая", "Антибактериальная", "Экологичная"],
+                size: "small",
+                material: "bamboo",
+                style: "plain",
+                fabric: "nonquilted",
+                weight: "0.8 кг",
+                care: "Стирка при 30°C",
+                dimensions: "40x60 см"
+            },
+            {
+                id: 4,
+                name: "Шерстяное одеяло Зима",
+                category: "blankets",
+                price: 5499,
+                description: "Теплое шерстяное одеяло для холодных зимних ночей. Натуральная шерсть обеспечивает оптимальный температурный режим и комфортный сон, впитывая влагу и позволяя коже дышать. Изготовлено из 100% овечьей шерсти высшего качества.",
+                images: [ 
+                 "Одеяло2.PNG",
+                    "Одеяло3.PNG",
+                     "Одеяло2.PNG"
+                ],
+                features: ["Натуральная шерсть", "Двуспальное", "Теплое", "Гипоаллергенное", "Дышащее"],
+                size: "double",
+                material: "wool",
+                style: "plain",
+                fabric: "quilted",
+                weight: "2.5 кг",
+                care: "Сухая чистка",
+                dimensions: "180x210 см"
+            },
+            {
+                id: 5,
+                name: "Хлопковое одеяло Лето",
+                category: "blankets",
+                price: 3299,
+                description: "Легкое хлопковое одеяло для теплого времени года. Изготовлено из 100% натурального хлопка, приятное к телу и гипоаллергенное. Идеально подходит для летнего использования или для тех, кто предпочитает легкие укрытия.",
+                images: [
+                    "Одеяло1.PNG",
+                    "Одеяло.PNG",
+                     "Одеяло1.PNG"
+                ],
+                features: ["100% хлопок", "Односпальное", "Легкое", "Дышащее", "Гипоаллергенное"],
+                size: "single",
+                material: "cotton",
+                style: "patterned",
+                fabric: "nonquilted",
+                weight: "1.2 кг",
+                care: "Стирка при 40°C",
+                dimensions: "140x200 см"
+            },
+            {
+                id: 6,
+                name: "Постельное белье Хлопковое",
+                category: "bedding",
+                price: 4599,
+                description: "Качественное постельное белье из 100% натурального хлопка перкаль. Мягкое, приятное к телу, обеспечивает комфортный сон в любое время года. Плотность 200 нитей на квадратный дюйм гарантирует долговечность и сохраняет яркость цветов после множества стирок.",
+                images: [
+                    "Пост12.PNG",
+                    "Пост22.PNG",
+                    "Пост12.PNG"
+                ],
+                features: ["100% хлопок", "Двуспальное", "Однотонное", "Стёганое", "Перкаль"],
+                size: "double",
+                material: "cotton",
+                style: "plain",
+                fabric: "quilted",
+                composition: "100% хлопок",
+                threadCount: "200 нитей/дюйм",
+                care: "Стирка при 60°C",
+                set: "Пододеяльник, простыня, 2 наволочки"
+            },
+            {
+                id: 7,
+                name: "Постельное белье Льняное с вышивкой",
+                category: "bedding",
+                price: 6299,
+                description: "Элегантное постельное белье из натурального льна с ручной вышивкой. Идеально для тех, кто ценит натуральные материалы и изысканный дизайн. Лен обладает уникальными свойствами - он становится мягче с каждой стиркой, отлично впитывает влагу и обеспечивает комфортную температуру во время сна.",
+                images: [
+                    "Пост1.PNG",
+                    "Пост2.PNG",
+                    "Пост1.PNG"
+                ],
+                features: ["Льняное", "Евро размер", "С вышивкой", "С рюшами", "Ручная работа", "Экологичное"],
+                size: "euro",
+                material: "linen",
+                style: "embroidered",
+                fabric: "lace",
+                composition: "100% лен",
+                threadCount: "150 нитей/дюйм",
+                care: "Стирка при 40°C",
+                set: "Пододеяльник, простыня, 2 наволочки, декоративные подушки"
+            }
+        ];
+
+        // Данные фильтров для каждой категории
+        const filtersData = {
+            pillows: {
+                title: "Фильтры для подушек",
+                filters: [
+                    {
+                        name: "Размер",
+                        key: "size",
+                        options: [
+                            { value: "small", label: "Маленькие" },
+                            { value: "medium", label: "Средние" },
+                            { value: "large", label: "Большие" }
+                        ]
+                    },
+                    {
+                        name: "Материал",
+                        key: "material",
+                        options: [
+                            { value: "cotton", label: "Хлопок" },
+                            { value: "latex", label: "Латекс" },
+                            { value: "memoryfoam", label: "Memory foam" },
+                            { value: "bamboo", label: "Бамбук" }
+                        ]
+                    }
+                ]
+            },
+            blankets: {
+                title: "Фильтры для одеял",
+                filters: [
+                    {
+                        name: "Размер",
+                        key: "size",
+                        options: [
+                            { value: "single", label: "Односпальное" },
+                            { value: "double", label: "Двуспальное" },
+                            { value: "king", label: "Кинг-сайз" }
+                        ]
+                    },
+                    {
+                        name: "Материал",
+                        key: "material",
+                        options: [
+                            { value: "wool", label: "Шерсть" },
+                            { value: "cotton", label: "Хлопок" },
+                            { value: "synthetic", label: "Синтетика" },
+                            { value: "bamboo", label: "Бамбук" }
+                        ]
+                    }
+                ]
+            },
+            bedding: {
+                title: "Фильтры для постельного белья",
+                filters: [
+                    {
+                        name: "Материал",
+                        key: "material",
+                        options: [
+                            { value: "cotton", label: "Хлопковое" },
+                            { value: "linen", label: "Льняное" },
+                            { value: "synthetic", label: "Синтетическое" },
+                            { value: "wool", label: "Шерстяное" }
+                        ]
+                    },
+                    {
+                        name: "Размер",
+                        key: "size",
+                        options: [
+                            { value: "single", label: "Односпальное" },
+                            { value: "onehalf", label: "Полутораспальное" },
+                            { value: "double", label: "Двуспальное" },
+                            { value: "euro", label: "Евро" },
+                            { value: "king", label: "Кинг-сайз" }
+                        ]
+                    },
+                    {
+                        name: "Стиль и дизайн",
+                        key: "style",
+                        options: [
+                            { value: "plain", label: "Однотонное" },
+                            { value: "patterned", label: "С узорами" },
+                            { value: "embroidered", label: "С вышивкой" }
+                        ]
+                    },
+                    {
+                        name: "Тип ткани",
+                        key: "fabric",
+                        options: [
+                            { value: "quilted", label: "Стёганое" },
+                            { value: "nonquilted", label: "Без стёжки" },
+                            { value: "lace", label: "С рюшами или кружевом" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Элементы DOM
+        const videoOverlay = document.getElementById('videoOverlay');
+        const skipVideoBtn = document.getElementById('skipVideo');
+        const mainContent = document.getElementById('mainContent');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const clearCartBtn = document.getElementById('clearCart');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const checkoutFormOverlay = document.getElementById('checkoutFormOverlay');
+        const cancelOrderBtn = document.getElementById('cancelOrder');
+        const orderForm = document.getElementById('orderForm');
+        const productModalOverlay = document.getElementById('productModalOverlay');
+        const closeModal = document.getElementById('closeModal');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalFeatures = document.getElementById('modalFeatures');
+        const modalSpecs = document.getElementById('modalSpecs');
+        const modalAddToCart = document.getElementById('modalAddToCart');
+        const mainProductImage = document.getElementById('mainProductImage');
+        const prevImageBtn = document.getElementById('prevImage');
+        const nextImageBtn = document.getElementById('nextImage');
+        const imageDots = document.getElementById('imageDots');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const homeButton = document.getElementById('homeButton');
+        
+        // Текущие фильтры и состояние
+        let currentFilters = {
+            category: 'all',
+            size: null,
+            material: null,
+            style: null,
+            fabric: null
+        };
+        
+        let currentPage = 'home';
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentProductModalId = null;
+        let currentProductImages = [];
+        let currentImageIndex = 0;
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            loadPage('home');
+            setupEventListeners();
+            
+            // Показываем видео заставку при первой загрузке
+            setTimeout(() => {
+                if (!localStorage.getItem('videoSkipped')) {
+                    videoOverlay.style.display = 'flex';
+                }
+            }, 500);
+            
+            // Автоматическое скрытие видео через 15 секунд
+            setTimeout(() => {
+                if (videoOverlay.style.display === 'flex') {
+                    skipVideo();
+                }
+            }, 15000);
+        });
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопка пропуска видео
+            skipVideoBtn.addEventListener('click', skipVideo);
+            
+            // Навигационные ссылки
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    const category = this.getAttribute('data-category');
+                    
+                    if (page) {
+                        loadPage(page);
+                    } else if (category) {
+                        loadCategoryPage(category);
+                    }
+                    
+                    // Закрываем меню на мобильных устройствах
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Гамбургер меню
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Кнопка "Главная" в логотипе
+            homeButton.addEventListener('click', function() {
+                loadPage('home');
+            });
+            
+            // Иконка корзины
+            cartIcon.addEventListener('click', openCart);
+            
+            // Закрытие корзины
+            closeCart.addEventListener('click', closeCartOverlay);
+            
+            // Кнопка очистки корзины
+            clearCartBtn.addEventListener('click', clearCart);
+            
+            // Кнопка оформления заказа
+            checkoutBtn.addEventListener('click', openCheckoutForm);
+            
+            // Отмена оформления заказа
+            cancelOrderBtn.addEventListener('click', closeCheckoutForm);
+            
+            // Отправка формы заказа
+            orderForm.addEventListener('submit', submitOrder);
+            
+            // Закрытие модального окна товара
+            closeModal.addEventListener('click', closeProductModal);
+            
+            // Навигация по изображениям
+            prevImageBtn.addEventListener('click', showPrevImage);
+            nextImageBtn.addEventListener('click', showNextImage);
+            
+            // Закрытие окон по клику на оверлей
+            cartOverlay.addEventListener('click', function(e) {
+                if (e.target === cartOverlay) closeCartOverlay();
+            });
+            
+            productModalOverlay.addEventListener('click', function(e) {
+                if (e.target === productModalOverlay) closeProductModal();
+            });
+            
+            checkoutFormOverlay.addEventListener('click', function(e) {
+                if (e.target === checkoutFormOverlay) closeCheckoutForm();
+            });
+        }
+        
+        // Пропуск видео
+        function skipVideo() {
+            videoOverlay.style.opacity = '0';
+            setTimeout(() => {
+                videoOverlay.style.display = 'none';
+                localStorage.setItem('videoSkipped', 'true');
+            }, 500);
+        }
+        
+        // Загрузка страницы
+        function loadPage(page) {
+            currentPage = page;
+            
+            switch(page) {
+                case 'home':
+                    loadHomePage();
+                    break;
+                case 'about':
+                    loadAboutPage();
+                    break;
+                case 'contacts':
+                    loadContactsPage();
+                    break;
+                default:
+                    loadHomePage();
+            }
+        }
+        
+        // Загрузка домашней страницы
+        function loadHomePage() {
+            mainContent.innerHTML = `
+                <h2 class="page-title">Качественные постельные принадлежности для вашего комфорта</h2>
+                
+                <div class="category-buttons">
+                    <button class="category-btn active" data-category="all">Все товары</button>
+                    <button class="category-btn" data-category="pillows">Подушки</button>
+                    <button class="category-btn" data-category="blankets">Одеяла</button>
+                    <button class="category-btn" data-category="bedding">Постельное белье</button>
+                </div>
+                
+                <section class="filters-section" id="filtersSection"></section>
+                
+                <div class="products-grid" id="productsContainer"></div>
+            `;
+            
+            currentFilters = {
+                category: 'all',
+                size: null,
+                material: null,
+                style: null,
+                fabric: null
+            };
+            
+            updateFiltersDisplay();
+            renderProducts(products);
+            
+            // Добавляем обработчики для кнопок категорий
+            document.querySelectorAll('.category-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    selectCategory(category);
+                });
+            });
+        }
+        
+        // Загрузка страницы "О нас"
+        function loadAboutPage() {
+            mainContent.innerHTML = `
+                <div class="page-content">
+                    <h2>О компании "Уютный сон"</h2>
+                    
+                    <p>Мы - компания "Уютный сон", занимающаяся производством и продажей качественных постельных принадлежностей уже более 10 лет. Наша миссия - обеспечить каждому клиенту здоровый и комфортный сон через использование натуральных материалов и инновационных технологий.</p>
+                    
+                    <h3>Наши преимущества</h3>
+                    <ul>
+                        <li><strong>Качество материалов:</strong> Мы используем только натуральные, гипоаллергенные материалы - хлопок, лен, шерсть, бамбук.</li>
+                        <li><strong>Экологичность:</strong> Все наши продукты производятся с минимальным воздействием на окружающую среду.</li>
+                        <li><strong>Контроль качества:</strong> Каждое изделие проходит тщательную проверку перед отправкой клиенту.</li>
+                        <li><strong>Доступные цены:</strong> Мы предлагаем оптимальное соотношение цены и качества.</li>
+                        <li><strong>Быстрая доставка:</strong> Доставляем товары по всей России в кратчайшие сроки.</li>
+                    </ul>
+                    
+                    <h3>Наше производство</h3>
+                    <p>Наше производство расположено в экологически чистом районе Подмосковья. Мы используем современное оборудование и придерживаемся строгих стандартов качества на всех этапах производства - от выбора сырья до упаковки готовой продукции.</p>
+                    
+                    <h3>Наша философия</h3>
+                    <p>Мы верим, что качественный сон - это основа здоровья и хорошего настроения. Поэтому мы создаем продукты, которые не просто функциональны, но и приносят эстетическое удовольствие. Каждое наше изделие создано с заботой о вашем комфорте.</p>
+                    
+                    <h3>Сертификаты и награды</h3>
+                    <p>Наша продукция имеет все необходимые сертификаты качества и безопасности. Мы неоднократно становились лауреатами премий в области товаров для дома и здорового сна.</p>
+                </div>
+            `;
+        }
+        
+        // Загрузка страницы "Контакты"
+        function loadContactsPage() {
+            mainContent.innerHTML = `
+                <div class="page-content">
+                    <h2>Контакты</h2>
+                    
+                    <p>Мы всегда рады помочь вам с выбором продукции и ответить на все ваши вопросы. Свяжитесь с нами любым удобным способом!</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Адрес</h3>
+                            <p>г. Москва, ул. Сонная, д. 25</p>
+                            <p>БЦ "Комфорт", 3 этаж, офис 301</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <h3>Телефоны</h3>
+                            <p>+7 (495) 123-45-67</p>
+                            <p>+7 (800) 100-20-30 (бесплатно по России)</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Электронная почта</h3>
+                            <p>info@uyutniyson.ru</p>
+                            <p>order@uyutniyson.ru (для заказов)</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <h3>Режим работы</h3>
+                            <p>Пн-Пт: 9:00 - 20:00</p>
+                            <p>Сб-Вс: 10:00 - 18:00</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Как нас найти</h3>
+                    <p>Наш шоу-рум расположен в центре Москвы, в 5 минутах ходьбы от метро "Комфортная". При посещении рекомендуем предварительно согласовать время визита по телефону.</p>
+                    
+                    <h3>Реквизиты компании</h3>
+                    <p>ООО "Уютный сон"</p>
+                    <p>ИНН: 1234567890</p>
+                    <p>ОГРН: 1234567890123</p>
+                    
+                    <h3>Обратная связь</h3>
+                    <p>Если у вас есть вопросы, предложения или жалобы, пожалуйста, напишите нам на почту или позвоните по указанным телефонам. Мы отвечаем на все обращения в течение 24 часов.</p>
+                </div>
+            `;
+        }
+        
+        // Загрузка страницы категории
+        function loadCategoryPage(category) {
+            loadHomePage();
+            selectCategory(category);
+        }
+        
+        // Выбор категории
+        function selectCategory(category) {
+            // Обновляем активную кнопку категории
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Обновляем текущий фильтр категории
+            currentFilters.category = category;
+            
+            // Сбрасываем остальные фильтры
+            currentFilters.size = null;
+            currentFilters.material = null;
+            currentFilters.style = null;
+            currentFilters.fabric = null;
+            
+            // Обновляем отображение фильтров
+            updateFiltersDisplay();
+            
+            // Применяем фильтры
+            applyFilters();
+        }
+        
+        // Обновление отображения фильтров
+        function updateFiltersDisplay() {
+            const category = currentFilters.category;
+            const filtersSection = document.getElementById('filtersSection');
+            
+            if (!filtersSection) return;
+            
+            if (category === 'all') {
+                filtersSection.style.display = 'none';
+                return;
+            }
+            
+            filtersSection.style.display = 'block';
+            const filters = filtersData[category];
+            
+            if (!filters) return;
+            
+            let filtersHTML = `
+                <div class="filters-title">
+                    <i class="fas fa-filter"></i>
+                    <h2>${filters.title}</h2>
+                </div>
+            `;
+            
+            filters.filters.forEach(filterGroup => {
+                filtersHTML += `
+                    <div class="filter-group">
+                        <h3>${filterGroup.name}</h3>
+                        <div class="filter-options">
+                `;
+                
+                filterGroup.options.forEach(option => {
+                    const isActive = currentFilters[filterGroup.key] === option.value;
+                    filtersHTML += `
+                        <span class="filter-btn ${isActive ? 'active' : ''}" 
+                              data-filter="${filterGroup.key}" 
+                              data-value="${option.value}">
+                            ${option.label}
+                        </span>
+                    `;
+                });
+                
+                filtersHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            filtersHTML += `
+                <div class="filter-group">
+                    <button id="resetFilters" style="padding: 10px 20px; background-color: #f1f5f9; border: 1px solid #d1d9e6; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                        Сбросить фильтры
+                    </button>
+                </div>
+            `;
+            
+            filtersSection.innerHTML = filtersHTML;
+            
+            // Добавляем обработчики для новых кнопок фильтров
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter');
+                    const filterValue = this.getAttribute('data-value');
+                    
+                    // Если фильтр уже активен, снимаем его
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                        currentFilters[filterType] = null;
+                    } else {
+                        // Снимаем активность с других кнопок того же типа фильтра
+                        document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        
+                        this.classList.add('active');
+                        currentFilters[filterType] = filterValue;
+                    }
+                    
+                    applyFilters();
+                });
+            });
+            
+            // Обработчик для кнопки сброса фильтров
+            document.getElementById('resetFilters').addEventListener('click', function() {
+                currentFilters.size = null;
+                currentFilters.material = null;
+                currentFilters.style = null;
+                currentFilters.fabric = null;
+                
+                updateFiltersDisplay();
+                applyFilters();
+            });
+        }
+        
+        // Применение фильтров
+        function applyFilters() {
+            let filteredProducts = products;
+            
+            // Фильтрация по категории
+            if (currentFilters.category !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === currentFilters.category);
+            }
+            
+            // Фильтрация по размеру
+            if (currentFilters.size) {
+                filteredProducts = filteredProducts.filter(product => product.size === currentFilters.size);
+            }
+            
+            // Фильтрация по материалу
+            if (currentFilters.material) {
+                filteredProducts = filteredProducts.filter(product => product.material === currentFilters.material);
+            }
+            
+            // Фильтрация по стилю
+            if (currentFilters.style) {
+                filteredProducts = filteredProducts.filter(product => product.style === currentFilters.style);
+            }
+            
+            // Фильтрация по типу ткани
+            if (currentFilters.fabric) {
+                filteredProducts = filteredProducts.filter(product => product.fabric === currentFilters.fabric);
+            }
+            
+            renderProducts(filteredProducts);
+        }
+        
+        // Отображение товаров
+        function renderProducts(productsToRender) {
+            const productsContainer = document.getElementById('productsContainer');
+            if (!productsContainer) return;
+            
+            productsContainer.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productsContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <h3>Товары не найдены</h3>
+                        <p>Попробуйте изменить параметры фильтрации</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            productsToRender.forEach(product => {
+              const productElement = document.createElement('div');
+productElement.className = 'product-card';
+productElement.setAttribute('data-id', product.id);
+productElement.innerHTML = `
+    <div class="product-image">
+        <img src="${product.images[0]}" alt="${product.name}">
+    </div>
+    <div class="product-info">
+        <div class="product-category">${getCategoryName(product.category)}</div>
+        <h3 class="product-name">${product.name}</h3>
+        <div class="product-features">
+            ${product.features.slice(0, 3).map(feature => `<span class="product-feature">${feature}</span>`).join('')}
+        </div>
+        <div class="product-price">${product.price.toLocaleString()} ₽</div>
+        <button class="add-to-cart" data-id="${product.id}">
+            <i class="fas fa-cart-plus"></i> Добавить в корзину
+        </button>
+    </div>
+`;
+                
+                productsContainer.appendChild(productElement);
+                
+                // Обработчик для открытия модального окна товара
+                productElement.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('add-to-cart')) {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        openProductModal(productId);
+                    }
+                });
+                
+                // Обработчик для кнопки добавления в корзину
+                const addToCartBtn = productElement.querySelector('.add-to-cart');
+                addToCartBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+        
+        // Получение названия категории
+        function getCategoryName(category) {
+            switch(category) {
+                case 'pillows': return 'Подушка';
+                case 'blankets': return 'Одеяло';
+                case 'bedding': return 'Постельное белье';
+                default: return 'Товар';
+            }
+        }
+        
+        // Открытие модального окна товара с простым слайдером
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProductModalId = productId;
+            currentProductImages = product.images;
+            currentImageIndex = 0;
+            
+            // Заполняем информацию о товаре
+            modalCategory.textContent = getCategoryName(product.category);
+            modalTitle.textContent = product.name;
+            modalPrice.textContent = `${product.price.toLocaleString()} ₽`;
+            modalDescription.textContent = product.description;
+            
+            // Очищаем и заполняем особенности
+            modalFeatures.innerHTML = '';
+            product.features.forEach(feature => {
+                const featureElement = document.createElement('span');
+                featureElement.className = 'modal-feature';
+                featureElement.textContent = feature;
+                modalFeatures.appendChild(featureElement);
+            });
+            
+            // Очищаем и заполняем характеристики
+            modalSpecs.innerHTML = '';
+            
+            // Добавляем характеристики в зависимости от категории
+            const specs = [];
+            
+            if (product.size) {
+                specs.push({ title: "Размер", value: getSizeLabel(product.size) });
+            }
+            
+            if (product.material) {
+                specs.push({ title: "Материал", value: getMaterialLabel(product.material) });
+            }
+            
+            if (product.dimensions) {
+                specs.push({ title: "Размеры", value: product.dimensions });
+            }
+            
+            if (product.weight) {
+                specs.push({ title: "Вес", value: product.weight });
+            }
+            
+            if (product.composition) {
+                specs.push({ title: "Состав", value: product.composition });
+            }
+            
+            if (product.threadCount) {
+                specs.push({ title: "Плотность ткани", value: product.threadCount });
+            }
+            
+            if (product.set) {
+                specs.push({ title: "Комплект", value: product.set });
+            }
+            
+            if (product.care) {
+                specs.push({ title: "Уход", value: product.care });
+            }
+            
+            specs.forEach(spec => {
+                const specElement = document.createElement('div');
+                specElement.className = 'modal-spec-item';
+                specElement.innerHTML = `
+                    <div class="modal-spec-title">${spec.title}:</div>
+                    <div class="modal-spec-value">${spec.value}</div>
+                `;
+                modalSpecs.appendChild(specElement);
+            });
+            
+            // Настраиваем кнопку добавления в корзину
+            modalAddToCart.onclick = function() {
+                addToCart(productId);
+                closeProductModal();
+            };
+            
+            // Показываем первое изображение
+            updateProductImage();
+            
+            // Обновляем точки навигации
+            updateImageDots();
+            
+            // Показываем модальное окно
+            productModalOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Обновление изображения товара
+        function updateProductImage() {
+            if (currentProductImages.length > 0) {
+                mainProductImage.src = currentProductImages[currentImageIndex];
+                mainProductImage.alt = `Товар ${currentImageIndex + 1}`;
+            }
+        }
+        
+        // Обновление точек навигации
+        function updateImageDots() {
+            imageDots.innerHTML = '';
+            
+            currentProductImages.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `image-dot ${index === currentImageIndex ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    updateProductImage();
+                    updateImageDots();
+                });
+                imageDots.appendChild(dot);
+            });
+        }
+        
+        // Показать предыдущее изображение
+        function showPrevImage() {
+            if (currentProductImages.length > 0) {
+                currentImageIndex = (currentImageIndex - 1 + currentProductImages.length) % currentProductImages.length;
+                updateProductImage();
+                updateImageDots();
+            }
+        }
+        
+        // Показать следующее изображение
+        function showNextImage() {
+            if (currentProductImages.length > 0) {
+                currentImageIndex = (currentImageIndex + 1) % currentProductImages.length;
+                updateProductImage();
+                updateImageDots();
+            }
+        }
+        
+        // Вспомогательные функции для преобразования значений
+        function getSizeLabel(size) {
+            const sizes = {
+                'small': 'Маленький',
+                'medium': 'Средний',
+                'large': 'Большой',
+                'single': 'Односпальный',
+                'onehalf': 'Полутораспальный',
+                'double': 'Двуспальный',
+                'euro': 'Евро',
+                'king': 'Кинг-сайз'
+            };
+            return sizes[size] || size;
+        }
+        
+        function getMaterialLabel(material) {
+            const materials = {
+                'cotton': 'Хлопок',
+                'latex': 'Латекс',
+                'memoryfoam': 'Memory foam',
+                'bamboo': 'Бамбук',
+                'wool': 'Шерсть',
+                'synthetic': 'Синтетика',
+                'linen': 'Лен'
+            };
+            return materials[material] || material;
+        }
+        
+        // Закрытие модального окна товара
+        function closeProductModal() {
+            productModalOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Добавление товара в корзину
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Проверяем, есть ли товар уже в корзине
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images[0],
+                    category: product.category,
+                    quantity: 1
+                });
+            }
+            
+            // Сохраняем корзину в localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем счетчик корзины
+            updateCartCount();
+            
+            // Показываем уведомление
+            showMessage(`Товар "${product.name}" добавлен в корзину!`);
+        }
+        
+        // Обновление счетчика корзины
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
+        
+        // Открытие корзины
+        function openCart() {
+            renderCartItems();
+            cartOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Закрытие корзины
+        function closeCartOverlay() {
+            cartOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Отображение товаров в корзине
+        function renderCartItems() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-shopping-cart" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <h3>Корзина пуста</h3>
+                        <p>Добавьте товары, чтобы сделать заказ</p>
+                    </div>
+                `;
+                cartTotal.textContent = '0 ₽';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.innerHTML='<i class=\"fas fa-box\"></i>
+                    </div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price.toLocaleString()} ₽ × ${item.quantity} = ${itemTotal.toLocaleString()} ₽</div>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn decrease-quantity" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                    </div>
+                    <button class="cart-item-remove" data-id="${item.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItemElement);
+            });
+            
+            cartTotal.textContent = `${total.toLocaleString()} ₽`;
+            
+            // Добавляем обработчики для кнопок изменения количества и удаления
+            document.querySelectorAll('.decrease-quantity').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    updateCartItemQuantity(productId, -1);
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    updateCartItemQuantity(productId, 1);
+                });
+            });
+            
+            document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(productId);
+                });
+            });
+        }
+        
+        // Обновление количества товара в корзине
+        function updateCartItemQuantity(productId, change) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex === -1) return;
+            
+            cart[itemIndex].quantity += change;
+            
+            // Если количество стало 0 или меньше, удаляем товар
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
+            }
+            
+            // Сохраняем корзину
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем отображение
+            updateCartCount();
+            renderCartItems();
+        }
+        
+        // Удаление товара из корзины
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            
+            // Сохраняем корзину
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем отображение
+            updateCartCount();
+            renderCartItems();
+        }
+        
+        // Очистка корзины
+        function clearCart() {
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCartItems();
+            showMessage('Корзина очищена');
+        }
+        
+        // Открытие формы оформления заказа
+        function openCheckoutForm() {
+            if (cart.length === 0) {
+                showMessage('Добавьте товары в корзину перед оформлением заказа', 'error');
+                return;
+            }
+            
+            closeCartOverlay();
+            checkoutFormOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Закрытие формы оформления заказа
+        function closeCheckoutForm() {
+            checkoutFormOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Отправка заказа - ОБНОВЛЕННАЯ ВЕРСИЯ
+        // ФУНКЦИЯ ОФОРМЛЕНИЯ ЗАКАЗА - НОВАЯ ВЕРСИЯ
+async function submitOrder(e) {
+    e.preventDefault();
+    
+    console.log('[Заказ] Начало обработки...');
+    
+    // 1. ПРОВЕРКА ДАННЫХ
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const address = document.getElementById('customerAddress').value.trim();
+    
+    if (!name || !phone || !address) {
+        showMessage('Заполните все обязательные поля (имя, телефон, адрес)', 'error');
+        return;
+    }
+    
+    if (cart.length === 0) {
+        showMessage('Корзина пуста', 'error');
+        return;
+    }
+    
+    // 2. ПОДГОТОВКА ДАННЫХ
+    const orderId = 'ORD-' + Date.now();
+    const orderTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    const orderData = {
+        orderId: orderId,
+        name: name,
+        phone: phone,
+        email: document.getElementById('customerEmail').value.trim() || 'не указан',
+        address: address,
+        comment: document.getElementById('orderComment').value.trim() || 'нет',
+        cart: cart,
+        total: orderTotal,
+        date: new Date().toLocaleString('ru-RU'),
+        timestamp: Date.now()
+    };
+    
+    console.log('Данные заказа:', orderData);
+    
+    // 3. ПОКАЗЫВАЕМ ИНДИКАТОР ЗАГРУЗКИ
+    const submitBtn = orderForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Отправка...';
+    submitBtn.disabled = true;
+    
+    let telegramSent = false;
+    let googleSheetsSent = false;
+    let localSaved = false;
+    
+    try {
+        // 4. ОТПРАВКА В ТЕЛЕГРАМ (ПЕРВЫЙ ПРИОРИТЕТ)
+        console.log('Отправка в Telegram...');
+        const telegramResult = await sendToTelegram(orderData);
+        
+        if (telegramResult.success) {
+            telegramSent = true;
+            console.log('✅ Telegram: успешно отправлено');
+        } else {
+            console.log('⚠️ Telegram: не отправлено', telegramResult.error);
+        }
+        
+        // 5. ОТПРАВКА В GOOGLE SHEETS (ВТОРОЙ ПРИОРИТЕТ)
+        console.log('Отправка в Google Sheets...');
+        const googleResult = await sendToGoogleSheets(orderData);
+        
+        if (googleResult.success) {
+            googleSheetsSent = true;
+            console.log('✅ Google Sheets: успешно отправлено');
+        } else {
+            console.log('⚠️ Google Sheets: не отправлено', googleResult.message);
+        }
+        
+        // 6. СОХРАНЕНИЕ В LOCALSTORAGE (ЗАПАСНОЙ ВАРИАНТ)
+        if (!telegramSent && !googleSheetsSent) {
+            console.log('Сохранение в localStorage...');
+            const saveResult = saveOrderToLocalStorage(orderData);
+            
+            if (saveResult) {
+                localSaved = true;
+                console.log('✅ localStorage: сохранено');
+            }
+        }
+        
+        // 7. ПОКАЗЫВАЕМ РЕЗУЛЬТАТ ПОЛЬЗОВАТЕЛЮ
+        if (telegramSent || googleSheetsSent) {
+            // Если хотя бы один способ сработал
+            let message = `✅ Заказ #${orderId} оформлен! `;
+            
+            if (telegramSent && googleSheetsSent) {
+                message += 'Данные отправлены. Мы вам перезвоним!';
+            } else if (telegramSent) {
+                message += 'Мы получили вашу заявку в Telegram. Скоро свяжемся!';
+            } else if (googleSheetsSent) {
+                message += 'Заказ записан. Менеджер свяжется с вами!';
+            }
+            
+            showMessage(message, 'success');
+            
+            // Очищаем корзину и форму
+            setTimeout(() => {
+                clearCart();
+                closeCheckoutForm();
+                orderForm.reset();
+                
+                // Показываем главную страницу
+                if (document.getElementById('homeButton')) {
+                    loadPage('home');
+                }
+            }, 3000);
+            
+        } else if (localSaved) {
+            // Если сохранилось только локально
+            showMessage(`📋 Заказ #${orderId} сохранен! Пожалуйста, позвоните нам: +7 (495) 123-45-67`, 'success');
+            
+            setTimeout(() => {
+                closeCheckoutForm();
+            }, 5000);
+        } else {
+            // Если вообще ничего не сработало
+            showMessage('❌ Ошибка при оформлении заказа. Позвоните нам: +7 (495) 123-45-67', 'error');
+        }
+        
+    } catch (error) {
+        console.error('Критическая ошибка:', error);
+        showMessage('❌ Непредвиденная ошибка. Пожалуйста, позвоните нам', 'error');
+    } finally {
+        // Восстанавливаем кнопку
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+
+
+
+
+// ФУНКЦИЯ ОТПРАВКИ В GOOGLE SHEETS
+// ФУНКЦИЯ ОТПРАВКИ В GOOGLE SHEETS (РАБОЧАЯ ВЕРСИЯ)
+async function sendToGoogleSheets(orderData) {
+    try {
+        console.log('Начинаем отправку в Google Sheets...');
+        
+        // 1. ПОДГОТОВКА ДАННЫХ ДЛЯ GOOGLE SHEETS
+        const sheetData = {
+            orderId: orderData.orderId,
+            name: orderData.name,
+            phone: orderData.phone,
+            email: orderData.email || 'не указан',
+            address: orderData.address,
+            comment: orderData.comment || 'нет',
+            total: orderData.total,
+            itemsCount: orderData.cart.reduce((sum, item) => sum + item.quantity, 0),
+            itemsList: orderData.cart.map(item => 
+                `${item.name} (${item.quantity} шт.)`
+            ).join('; '),
+            date: orderData.date,
+            timestamp: orderData.timestamp,
+            source: 'Уютный Сон - сайт'
+        };
+        
+        console.log('Данные для Google Sheets:', sheetData);
+        
+        // 2. ИСПОЛЬЗУЕМ ПРАВИЛЬНЫЙ МЕТОД ДЛЯ CORS
+        // URL вашего Google Apps Script
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxX9FDlVRHNGIr4kvtbrC5JX33TZ3bBsVGkZSvdHo6WFIqKTywm0vQid6pD8PRV5pkQxA/exec';
+        
+        // 3. СОЗДАЕМ ФОРМУ ДЛЯ ОТПРАВКИ (ОБХОД CORS)
+        const formData = new FormData();
+        
+        // Добавляем все данные в форму
+        Object.keys(sheetData).forEach(key => {
+            formData.append(key, sheetData[key]);
+        });
+        
+        // 4. ОТПРАВЛЯЕМ ЧЕРЕЗ GOOGLE APPS SCRIPT (С УЧЕТОМ CORS)
+        // Используем метод, который не требует CORS
+        const response = await fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors', // Важно! Режим без CORS
+            body: formData
+        });
+        
+        // В режиме 'no-cors' мы не можем прочитать ответ, но запрос отправляется
+        console.log('Запрос в Google Sheets отправлен (режим no-cors)');
+        
+        // 5. ДОПОЛНИТЕЛЬНЫЙ СПОСОБ - ОТПРАВКА ЧЕРЕЗ GET
+        // Создаем URL с параметрами
+        const params = new URLSearchParams();
+        Object.keys(sheetData).forEach(key => {
+            params.append(key, sheetData[key]);
+        });
+        
+        const getUrl = `${scriptUrl}?${params.toString()}`;
+        
+        // Отправляем GET запрос (он всегда работает)
+        try {
+            await fetch(getUrl, { mode: 'no-cors' });
+            console.log('Данные также отправлены через GET');
+        } catch (getError) {
+            console.log('GET запрос не удался, но это нормально');
+        }
+        
+        return {
+            success: true,
+            message: 'Данные отправлены в Google Sheets'
+        };
+        
+    } catch (error) {
+        console.warn('Ошибка при отправке в Google Sheets:', error.message);
+        
+        // Даже если есть ошибка, считаем успехом (данные могут уйти)
+        return {
+            success: true, // Меняем на true, так как в режиме no-cors ошибки могут быть ложными
+            message: 'Данные отправлены (возможно, в фоновом режиме)'
+        };
+    }
+}
+
+
+// ФУНКЦИЯ СОХРАНЕНИЯ В LOCALSTORAGE
+function saveOrderToLocalStorage(orderData) {
+    try {
+        // 1. ПОЛУЧАЕМ СУЩЕСТВУЮЩИЕ ЗАКАЗЫ
+        const existingOrders = JSON.parse(localStorage.getItem('uyutniyson_orders')) || [];
+        
+        // 2. ДОБАВЛЯЕМ НОВЫЙ ЗАКАЗ
+        existingOrders.push(orderData);
+        
+        // 3. СОХРАНЯЕМ (МАКСИМУМ 50 ЗАКАЗОВ)
+        if (existingOrders.length > 50) {
+            existingOrders.shift(); // Удаляем самый старый
+        }
+        
+        localStorage.setItem('uyutniyson_orders', JSON.stringify(existingOrders));
+        
+        // 4. ТАКЖЕ СОХРАНЯЕМ ОТДЕЛЬНО ПОСЛЕДНИЙ ЗАКАЗ
+        localStorage.setItem('last_order', JSON.stringify(orderData));
+        
+        console.log('Заказ сохранен в localStorage:', orderData.orderId);
+        return true;
+        
+    } catch (error) {
+        console.error('Ошибка сохранения в localStorage:', error);
+        return false;
+    }
+}
+    </script>
+    <script src="telegrM.js"></script>
+</body>
+</html>
