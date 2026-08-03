@@ -377,11 +377,35 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            position: relative;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Бейдж "Новинка" или "Хит" */
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 2;
+            color: white;
+        }
+        .product-badge.new {
+            background-color: #27ae60;
+        }
+        .product-badge.hit {
+            background-color: #e67e22;
+        }
+        .product-badge.sale {
+            background-color: #e74c3c;
         }
         
         .product-image {
@@ -1200,75 +1224,201 @@
         }
 
         /* Общие стили для адаптивности */
-.video-container {
-    width: 90%;
-    max-width: 600px; /* Ограничиваем ширину для больших экранов */
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    border-radius: 10px;
-}
+        .video-container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
 
-.video-placeholder {
-    height: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
+        .video-placeholder {
+            height: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
 
-.video-placeholder i {
-    font-size: 60px; /* Меньше для маленьких экранов */
-    margin-bottom: 15px;
-}
+        .video-placeholder i {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
 
-.video-placeholder h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
-}
-.video-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
+        .video-placeholder h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .video-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
 
-.skip-video {
-    padding: 14px 30px;
-    font-size: 16px;
-    background-color: #4a6fa5;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    font-weight: 600;
-    margin-top: 30px; /* чуть ниже текста */
-}
+        .skip-video {
+            padding: 14px 30px;
+            font-size: 16px;
+            background-color: #4a6fa5;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            margin-top: 30px;
+        }
 
-/* Медиазапрос для мобильных */
-@media(max-width: 480px) {
-    .skip-video {
-        padding: 16px 40px;
-        font-size: 18px;
-        margin-top: 20px;
-    }
-}
+        @media(max-width: 480px) {
+            .skip-video {
+                padding: 16px 40px;
+                font-size: 18px;
+                margin-top: 20px;
+            }
+        }
 
+        /* ---- НОВЫЕ КРУТЫЕ ФИШКИ ---- */
+        /* 1. Анимация появления элементов */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .product-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.2s; }
+        .product-card:nth-child(4) { animation-delay: 0.3s; }
+        .product-card:nth-child(5) { animation-delay: 0.4s; }
+        .product-card:nth-child(6) { animation-delay: 0.5s; }
+        .product-card:nth-child(7) { animation-delay: 0.6s; }
+        .product-card:nth-child(8) { animation-delay: 0.7s; }
+
+        /* 2. Кнопка "Наверх" */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74, 111, 165, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #scrollToTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #scrollToTopBtn:hover {
+            transform: translateY(-3px);
+            background-color: #3a5a8a;
+            box-shadow: 0 6px 20px rgba(74, 111, 165, 0.5);
+        }
+
+        /* 3. Индикатор загрузки на кнопке "Добавить в корзину" */
+        .add-to-cart.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .add-to-cart.loading::after {
+            content: "⌛";
+            margin-left: 8px;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 4. Блики на карточках товара */
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .product-card:hover .product-image::after {
+            opacity: 1;
+        }
+
+        /* 5. Счетчик товаров в корзине с анимацией */
+        .cart-count {
+            transition: transform 0.3s ease;
+        }
+        .cart-count.bump {
+            animation: bump 0.3s ease;
+        }
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* 6. Индикатор "В наличии" */
+        .stock-badge {
+            display: inline-block;
+            background-color: #27ae60;
+            color: white;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* 7. Стильный скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a6fa5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a5a8a;
+        }
     </style>
 </head>
 <body>
     <!-- Видео заставка -->
     <div class="video-overlay" id="videoOverlay">
-    <div class="video-placeholder">
-    <i class="fas fa-bed"></i>
-    <h2>Добро пожаловать в магазин "Уютный сон"!</h2>
-    <p>Мы предлагаем лучшие постельные принадлежности для вашего комфортного сна. Ортопедические подушки, теплые одеяла, качественное постельное белье - всё для вашего уюта и здоровья.</p>
-    <p>Наши товары изготавливаются из натуральных материалов с заботой о вашем сне.</p>
-    <button class="skip-video" id="skipVideo">Начать покупки</button>
-</div>
+        <div class="video-placeholder">
+            <i class="fas fa-bed"></i>
+            <h2>Добро пожаловать в магазин "Уютный сон"!</h2>
+            <p>Мы предлагаем лучшие постельные принадлежности для вашего комфортного сна. Ортопедические подушки, теплые одеяла, качественное постельное белье - всё для вашего уюта и здоровья.</p>
+            <p>Наши товары изготавливаются из натуральных материалов с заботой о вашем сне.</p>
+            <button class="skip-video" id="skipVideo">Начать покупки</button>
         </div>
     </div>
 
@@ -1298,7 +1448,7 @@
             
             <div class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
+                <span class="cart-count" id="cartCountDisplay">0</span>
             </div>
         </div>
     </header>
@@ -1308,7 +1458,10 @@
         <!-- Контент будет динамически меняться -->
     </div>
 
-    <!-- Модальное окно товара - ПРОСТОЙ РУЧНОЙ СЛАЙДЕР -->
+    <!-- Кнопка "Наверх" -->
+    <button id="scrollToTopBtn" title="Наверх"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Модальное окно товара -->
     <div class="product-modal-overlay" id="productModalOverlay">
         <div class="product-modal">
             <div class="modal-header">
@@ -1328,9 +1481,7 @@
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-                    <div class="image-dots" id="imageDots">
-                        <!-- Точки будут добавляться динамически -->
-                    </div>
+                    <div class="image-dots" id="imageDots"></div>
                 </div>
                 <div class="modal-info">
                     <div class="modal-category" id="modalCategory"></div>
@@ -1338,13 +1489,9 @@
                     <div class="modal-price" id="modalPrice"></div>
                     <div class="modal-description" id="modalDescription"></div>
                     
-                    <div class="modal-features" id="modalFeatures">
-                        <!-- Особенности будут добавляться динамически -->
-                    </div>
+                    <div class="modal-features" id="modalFeatures"></div>
                     
-                    <div class="modal-specs" id="modalSpecs">
-                        <!-- Характеристики будут добавляться динамически -->
-                    </div>
+                    <div class="modal-specs" id="modalSpecs"></div>
                     
                     <button class="modal-add-to-cart" id="modalAddToCart">
                         <i class="fas fa-cart-plus"></i> Добавить в корзину
@@ -1363,9 +1510,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Товары в корзине будут добавляться динамически -->
-            </div>
+            <div class="cart-items" id="cartItems"></div>
             <div class="cart-footer">
                 <div class="cart-total">
                     <span>Итого:</span>
@@ -1455,7 +1600,7 @@
         </div>
     </footer>
 
-      <script>
+    <script>
         // Данные товаров
         const products = [
             {
@@ -1466,8 +1611,8 @@
                 description: "Ортопедическая подушка с эффектом памяти формы обеспечивает оптимальную поддержку головы и шеи во время сна. Изготовлена из гипоаллергенных материалов, которые адаптируются к форме вашего тела, обеспечивая максимальный комфорт и здоровый сон. Идеально подходит для тех, кто страдает от болей в шее или спине.",
                 images: [
                     "Снимок.PNG",
-                  "Снимок1.PNG",
-                 "Снимок.PNG"
+                    "Снимок1.PNG",
+                    "Снимок.PNG"
                 ],
                 features: ["Memory foam", "Средний размер", "Гипоаллергенная", "Анатомическая форма"],
                 size: "medium",
@@ -1476,7 +1621,9 @@
                 fabric: "nonquilted",
                 weight: "1.2 кг",
                 care: "Стирка при 40°C",
-                dimensions: "50x70 см"
+                dimensions: "50x70 см",
+                badge: "new",
+                inStock: true
             },
             {
                 id: 2,
@@ -1485,9 +1632,9 @@
                 price: 3599,
                 description: "Роскошная пуховая подушка премиум-класса с наполнителем из натурального гусиного пуха. Обеспечивает невероятную мягкость и комфорт, идеально подстраиваясь под форму головы и шеи. Наволочка из 100% хлопка сатина обеспечивает приятные тактильные ощущения и долговечность.",
                 images: [
-                "Снимок2.PNG",
-                "Снимок1.PNG",
-                "Снимок.PNG"
+                    "Снимок2.PNG",
+                    "Снимок1.PNG",
+                    "Снимок.PNG"
                 ],
                 features: ["Натуральный пух", "Большой размер", "Высокое качество", "Гипоаллергенная"],
                 size: "large",
@@ -1496,7 +1643,9 @@
                 fabric: "quilted",
                 weight: "1.5 кг",
                 care: "Химическая чистка",
-                dimensions: "70x70 см"
+                dimensions: "70x70 см",
+                badge: "hit",
+                inStock: true
             },
             {
                 id: 3,
@@ -1505,9 +1654,9 @@
                 price: 1999,
                 description: "Экологичная подушка с наполнителем из бамбукового волокна. Обладает антибактериальными свойствами и отличной воздухопроницаемостью, что обеспечивает комфортный сон в любое время года. Идеальный выбор для людей с аллергией и для тех, кто ценит экологичные материалы.",
                 images: [
-                  "Снимок3.PNG",
-                  "Снимок1.PNG",
-                  "Снимок.PNG"
+                    "Снимок3.PNG",
+                    "Снимок1.PNG",
+                    "Снимок.PNG"
                 ],
                 features: ["Бамбуковое волокно", "Маленький размер", "Дышащая", "Антибактериальная", "Экологичная"],
                 size: "small",
@@ -1516,7 +1665,9 @@
                 fabric: "nonquilted",
                 weight: "0.8 кг",
                 care: "Стирка при 30°C",
-                dimensions: "40x60 см"
+                dimensions: "40x60 см",
+                badge: "new",
+                inStock: true
             },
             {
                 id: 4,
@@ -1524,10 +1675,10 @@
                 category: "blankets",
                 price: 5499,
                 description: "Теплое шерстяное одеяло для холодных зимних ночей. Натуральная шерсть обеспечивает оптимальный температурный режим и комфортный сон, впитывая влагу и позволяя коже дышать. Изготовлено из 100% овечьей шерсти высшего качества.",
-                images: [ 
-                 "Одеяло2.PNG",
+                images: [
+                    "Одеяло2.PNG",
                     "Одеяло3.PNG",
-                     "Одеяло2.PNG"
+                    "Одеяло2.PNG"
                 ],
                 features: ["Натуральная шерсть", "Двуспальное", "Теплое", "Гипоаллергенное", "Дышащее"],
                 size: "double",
@@ -1536,7 +1687,9 @@
                 fabric: "quilted",
                 weight: "2.5 кг",
                 care: "Сухая чистка",
-                dimensions: "180x210 см"
+                dimensions: "180x210 см",
+                badge: "hit",
+                inStock: true
             },
             {
                 id: 5,
@@ -1547,7 +1700,7 @@
                 images: [
                     "Одеяло1.PNG",
                     "Одеяло.PNG",
-                     "Одеяло1.PNG"
+                    "Одеяло1.PNG"
                 ],
                 features: ["100% хлопок", "Односпальное", "Легкое", "Дышащее", "Гипоаллергенное"],
                 size: "single",
@@ -1556,7 +1709,9 @@
                 fabric: "nonquilted",
                 weight: "1.2 кг",
                 care: "Стирка при 40°C",
-                dimensions: "140x200 см"
+                dimensions: "140x200 см",
+                badge: null,
+                inStock: true
             },
             {
                 id: 6,
@@ -1577,7 +1732,9 @@
                 composition: "100% хлопок",
                 threadCount: "200 нитей/дюйм",
                 care: "Стирка при 60°C",
-                set: "Пододеяльник, простыня, 2 наволочки"
+                set: "Пододеяльник, простыня, 2 наволочки",
+                badge: "sale",
+                inStock: true
             },
             {
                 id: 7,
@@ -1598,7 +1755,9 @@
                 composition: "100% лен",
                 threadCount: "150 нитей/дюйм",
                 care: "Стирка при 40°C",
-                set: "Пододеяльник, простыня, 2 наволочки, декоративные подушки"
+                set: "Пододеяльник, простыня, 2 наволочки, декоративные подушки",
+                badge: "new",
+                inStock: true
             }
         ];
 
@@ -1730,7 +1889,9 @@
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
         const homeButton = document.getElementById('homeButton');
-        
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        const cartCountDisplay = document.getElementById('cartCountDisplay');
+
         // Текущие фильтры и состояние
         let currentFilters = {
             category: 'all',
@@ -1752,27 +1913,35 @@
             loadPage('home');
             setupEventListeners();
             
-            // Показываем видео заставку при первой загрузке
             setTimeout(() => {
                 if (!localStorage.getItem('videoSkipped')) {
                     videoOverlay.style.display = 'flex';
                 }
             }, 500);
             
-            // Автоматическое скрытие видео через 15 секунд
             setTimeout(() => {
                 if (videoOverlay.style.display === 'flex') {
                     skipVideo();
                 }
             }, 15000);
+
+            // Кнопка "Наверх"
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
         
         // Настройка обработчиков событий
         function setupEventListeners() {
-            // Кнопка пропуска видео
             skipVideoBtn.addEventListener('click', skipVideo);
             
-            // Навигационные ссылки
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1785,49 +1954,30 @@
                         loadCategoryPage(category);
                     }
                     
-                    // Закрываем меню на мобильных устройствах
                     hamburger.classList.remove('active');
                     navMenu.classList.remove('active');
                 });
             });
             
-            // Гамбургер меню
             hamburger.addEventListener('click', function() {
                 this.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
             
-            // Кнопка "Главная" в логотипе
             homeButton.addEventListener('click', function() {
                 loadPage('home');
             });
             
-            // Иконка корзины
             cartIcon.addEventListener('click', openCart);
-            
-            // Закрытие корзины
             closeCart.addEventListener('click', closeCartOverlay);
-            
-            // Кнопка очистки корзины
             clearCartBtn.addEventListener('click', clearCart);
-            
-            // Кнопка оформления заказа
             checkoutBtn.addEventListener('click', openCheckoutForm);
-            
-            // Отмена оформления заказа
             cancelOrderBtn.addEventListener('click', closeCheckoutForm);
-            
-            // Отправка формы заказа
             orderForm.addEventListener('submit', submitOrder);
-            
-            // Закрытие модального окна товара
             closeModal.addEventListener('click', closeProductModal);
-            
-            // Навигация по изображениям
             prevImageBtn.addEventListener('click', showPrevImage);
             nextImageBtn.addEventListener('click', showNextImage);
             
-            // Закрытие окон по клику на оверлей
             cartOverlay.addEventListener('click', function(e) {
                 if (e.target === cartOverlay) closeCartOverlay();
             });
@@ -1841,7 +1991,6 @@
             });
         }
         
-        // Пропуск видео
         function skipVideo() {
             videoOverlay.style.opacity = '0';
             setTimeout(() => {
@@ -1850,7 +1999,6 @@
             }, 500);
         }
         
-        // Загрузка страницы
         function loadPage(page) {
             currentPage = page;
             
@@ -1869,7 +2017,6 @@
             }
         }
         
-        // Загрузка домашней страницы
         function loadHomePage() {
             mainContent.innerHTML = `
                 <h2 class="page-title">Качественные постельные принадлежности для вашего комфорта</h2>
@@ -1897,7 +2044,6 @@
             updateFiltersDisplay();
             renderProducts(products);
             
-            // Добавляем обработчики для кнопок категорий
             document.querySelectorAll('.category-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const category = this.getAttribute('data-category');
@@ -1906,14 +2052,11 @@
             });
         }
         
-        // Загрузка страницы "О нас"
         function loadAboutPage() {
             mainContent.innerHTML = `
                 <div class="page-content">
                     <h2>О компании "Уютный сон"</h2>
-                    
                     <p>Мы - компания "Уютный сон", занимающаяся производством и продажей качественных постельных принадлежностей уже более 10 лет. Наша миссия - обеспечить каждому клиенту здоровый и комфортный сон через использование натуральных материалов и инновационных технологий.</p>
-                    
                     <h3>Наши преимущества</h3>
                     <ul>
                         <li><strong>Качество материалов:</strong> Мы используем только натуральные, гипоаллергенные материалы - хлопок, лен, шерсть, бамбук.</li>
@@ -1922,27 +2065,21 @@
                         <li><strong>Доступные цены:</strong> Мы предлагаем оптимальное соотношение цены и качества.</li>
                         <li><strong>Быстрая доставка:</strong> Доставляем товары по всей России в кратчайшие сроки.</li>
                     </ul>
-                    
                     <h3>Наше производство</h3>
                     <p>Наше производство расположено в экологически чистом районе Подмосковья. Мы используем современное оборудование и придерживаемся строгих стандартов качества на всех этапах производства - от выбора сырья до упаковки готовой продукции.</p>
-                    
                     <h3>Наша философия</h3>
                     <p>Мы верим, что качественный сон - это основа здоровья и хорошего настроения. Поэтому мы создаем продукты, которые не просто функциональны, но и приносят эстетическое удовольствие. Каждое наше изделие создано с заботой о вашем комфорте.</p>
-                    
                     <h3>Сертификаты и награды</h3>
                     <p>Наша продукция имеет все необходимые сертификаты качества и безопасности. Мы неоднократно становились лауреатами премий в области товаров для дома и здорового сна.</p>
                 </div>
             `;
         }
         
-        // Загрузка страницы "Контакты"
         function loadContactsPage() {
             mainContent.innerHTML = `
                 <div class="page-content">
                     <h2>Контакты</h2>
-                    
                     <p>Мы всегда рады помочь вам с выбором продукции и ответить на все ваши вопросы. Свяжитесь с нами любым удобным способом!</p>
-                    
                     <div class="contact-info">
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
@@ -1950,21 +2087,18 @@
                             <p>г. Москва, ул. Сонная, д. 25</p>
                             <p>БЦ "Комфорт", 3 этаж, офис 301</p>
                         </div>
-                        
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <h3>Телефоны</h3>
                             <p>+7 (495) 123-45-67</p>
                             <p>+7 (800) 100-20-30 (бесплатно по России)</p>
                         </div>
-                        
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
                             <h3>Электронная почта</h3>
                             <p>info@uyutniyson.ru</p>
                             <p>order@uyutniyson.ru (для заказов)</p>
                         </div>
-                        
                         <div class="contact-item">
                             <i class="fas fa-clock"></i>
                             <h3>Режим работы</h3>
@@ -1972,30 +2106,24 @@
                             <p>Сб-Вс: 10:00 - 18:00</p>
                         </div>
                     </div>
-                    
                     <h3>Как нас найти</h3>
                     <p>Наш шоу-рум расположен в центре Москвы, в 5 минутах ходьбы от метро "Комфортная". При посещении рекомендуем предварительно согласовать время визита по телефону.</p>
-                    
                     <h3>Реквизиты компании</h3>
                     <p>ООО "Уютный сон"</p>
                     <p>ИНН: 1234567890</p>
                     <p>ОГРН: 1234567890123</p>
-                    
                     <h3>Обратная связь</h3>
                     <p>Если у вас есть вопросы, предложения или жалобы, пожалуйста, напишите нам на почту или позвоните по указанным телефонам. Мы отвечаем на все обращения в течение 24 часов.</p>
                 </div>
             `;
         }
         
-        // Загрузка страницы категории
         function loadCategoryPage(category) {
             loadHomePage();
             selectCategory(category);
         }
         
-        // Выбор категории
         function selectCategory(category) {
-            // Обновляем активную кнопку категории
             document.querySelectorAll('.category-btn').forEach(btn => {
                 if (btn.getAttribute('data-category') === category) {
                     btn.classList.add('active');
@@ -2004,23 +2132,16 @@
                 }
             });
             
-            // Обновляем текущий фильтр категории
             currentFilters.category = category;
-            
-            // Сбрасываем остальные фильтры
             currentFilters.size = null;
             currentFilters.material = null;
             currentFilters.style = null;
             currentFilters.fabric = null;
             
-            // Обновляем отображение фильтров
             updateFiltersDisplay();
-            
-            // Применяем фильтры
             applyFilters();
         }
         
-        // Обновление отображения фильтров
         function updateFiltersDisplay() {
             const category = currentFilters.category;
             const filtersSection = document.getElementById('filtersSection');
@@ -2078,18 +2199,15 @@
             
             filtersSection.innerHTML = filtersHTML;
             
-            // Добавляем обработчики для новых кнопок фильтров
             document.querySelectorAll('.filter-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const filterType = this.getAttribute('data-filter');
                     const filterValue = this.getAttribute('data-value');
                     
-                    // Если фильтр уже активен, снимаем его
                     if (this.classList.contains('active')) {
                         this.classList.remove('active');
                         currentFilters[filterType] = null;
                     } else {
-                        // Снимаем активность с других кнопок того же типа фильтра
                         document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
                             btn.classList.remove('active');
                         });
@@ -2102,7 +2220,6 @@
                 });
             });
             
-            // Обработчик для кнопки сброса фильтров
             document.getElementById('resetFilters').addEventListener('click', function() {
                 currentFilters.size = null;
                 currentFilters.material = null;
@@ -2114,31 +2231,25 @@
             });
         }
         
-        // Применение фильтров
         function applyFilters() {
             let filteredProducts = products;
             
-            // Фильтрация по категории
             if (currentFilters.category !== 'all') {
                 filteredProducts = filteredProducts.filter(product => product.category === currentFilters.category);
             }
             
-            // Фильтрация по размеру
             if (currentFilters.size) {
                 filteredProducts = filteredProducts.filter(product => product.size === currentFilters.size);
             }
             
-            // Фильтрация по материалу
             if (currentFilters.material) {
                 filteredProducts = filteredProducts.filter(product => product.material === currentFilters.material);
             }
             
-            // Фильтрация по стилю
             if (currentFilters.style) {
                 filteredProducts = filteredProducts.filter(product => product.style === currentFilters.style);
             }
             
-            // Фильтрация по типу ткани
             if (currentFilters.fabric) {
                 filteredProducts = filteredProducts.filter(product => product.fabric === currentFilters.fabric);
             }
@@ -2146,7 +2257,6 @@
             renderProducts(filteredProducts);
         }
         
-        // Отображение товаров
         function renderProducts(productsToRender) {
             const productsContainer = document.getElementById('productsContainer');
             if (!productsContainer) return;
@@ -2164,30 +2274,43 @@
                 return;
             }
             
-            productsToRender.forEach(product => {
-              const productElement = document.createElement('div');
-productElement.className = 'product-card';
-productElement.setAttribute('data-id', product.id);
-productElement.innerHTML = `
-    <div class="product-image">
-        <img src="${product.images[0]}" alt="${product.name}">
-    </div>
-    <div class="product-info">
-        <div class="product-category">${getCategoryName(product.category)}</div>
-        <h3 class="product-name">${product.name}</h3>
-        <div class="product-features">
-            ${product.features.slice(0, 3).map(feature => `<span class="product-feature">${feature}</span>`).join('')}
-        </div>
-        <div class="product-price">${product.price.toLocaleString()} ₽</div>
-        <button class="add-to-cart" data-id="${product.id}">
-            <i class="fas fa-cart-plus"></i> Добавить в корзину
-        </button>
-    </div>
-`;
+            productsToRender.forEach((product, index) => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-card';
+                productElement.setAttribute('data-id', product.id);
+                
+                // Бейдж
+                let badgeHTML = '';
+                if (product.badge) {
+                    const badgeClass = product.badge;
+                    const badgeText = product.badge === 'new' ? 'Новинка' : product.badge === 'hit' ? 'Хит' : 'Скидка';
+                    badgeHTML = `<span class="product-badge ${badgeClass}">${badgeText}</span>`;
+                }
+                
+                // Индикатор "В наличии"
+                const stockHTML = product.inStock ? `<span class="stock-badge"><i class="fas fa-check-circle"></i> В наличии</span>` : `<span class="stock-badge" style="background-color:#e74c3c;"><i class="fas fa-times-circle"></i> Нет в наличии</span>`;
+                
+                productElement.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.images[0]}" alt="${product.name}">
+                        ${badgeHTML}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${getCategoryName(product.category)}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-features">
+                            ${product.features.slice(0, 3).map(feature => `<span class="product-feature">${feature}</span>`).join('')}
+                        </div>
+                        <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                        ${stockHTML}
+                        <button class="add-to-cart" data-id="${product.id}">
+                            <i class="fas fa-cart-plus"></i> Добавить в корзину
+                        </button>
+                    </div>
+                `;
                 
                 productsContainer.appendChild(productElement);
                 
-                // Обработчик для открытия модального окна товара
                 productElement.addEventListener('click', function(e) {
                     if (!e.target.classList.contains('add-to-cart')) {
                         const productId = parseInt(this.getAttribute('data-id'));
@@ -2195,17 +2318,20 @@ productElement.innerHTML = `
                     }
                 });
                 
-                // Обработчик для кнопки добавления в корзину
                 const addToCartBtn = productElement.querySelector('.add-to-cart');
                 addToCartBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const productId = parseInt(this.getAttribute('data-id'));
-                    addToCart(productId);
+                    // Анимация загрузки на кнопке
+                    this.classList.add('loading');
+                    setTimeout(() => {
+                        addToCart(productId);
+                        this.classList.remove('loading');
+                    }, 300);
                 });
             });
         }
         
-        // Получение названия категории
         function getCategoryName(category) {
             switch(category) {
                 case 'pillows': return 'Подушка';
@@ -2215,7 +2341,6 @@ productElement.innerHTML = `
             }
         }
         
-        // Открытие модального окна товара с простым слайдером
         function openProductModal(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -2224,13 +2349,11 @@ productElement.innerHTML = `
             currentProductImages = product.images;
             currentImageIndex = 0;
             
-            // Заполняем информацию о товаре
             modalCategory.textContent = getCategoryName(product.category);
             modalTitle.textContent = product.name;
             modalPrice.textContent = `${product.price.toLocaleString()} ₽`;
             modalDescription.textContent = product.description;
             
-            // Очищаем и заполняем особенности
             modalFeatures.innerHTML = '';
             product.features.forEach(feature => {
                 const featureElement = document.createElement('span');
@@ -2239,10 +2362,8 @@ productElement.innerHTML = `
                 modalFeatures.appendChild(featureElement);
             });
             
-            // Очищаем и заполняем характеристики
             modalSpecs.innerHTML = '';
             
-            // Добавляем характеристики в зависимости от категории
             const specs = [];
             
             if (product.size) {
@@ -2287,24 +2408,18 @@ productElement.innerHTML = `
                 modalSpecs.appendChild(specElement);
             });
             
-            // Настраиваем кнопку добавления в корзину
             modalAddToCart.onclick = function() {
                 addToCart(productId);
                 closeProductModal();
             };
             
-            // Показываем первое изображение
             updateProductImage();
-            
-            // Обновляем точки навигации
             updateImageDots();
             
-            // Показываем модальное окно
             productModalOverlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
         
-        // Обновление изображения товара
         function updateProductImage() {
             if (currentProductImages.length > 0) {
                 mainProductImage.src = currentProductImages[currentImageIndex];
@@ -2312,7 +2427,6 @@ productElement.innerHTML = `
             }
         }
         
-        // Обновление точек навигации
         function updateImageDots() {
             imageDots.innerHTML = '';
             
@@ -2328,7 +2442,6 @@ productElement.innerHTML = `
             });
         }
         
-        // Показать предыдущее изображение
         function showPrevImage() {
             if (currentProductImages.length > 0) {
                 currentImageIndex = (currentImageIndex - 1 + currentProductImages.length) % currentProductImages.length;
@@ -2337,7 +2450,6 @@ productElement.innerHTML = `
             }
         }
         
-        // Показать следующее изображение
         function showNextImage() {
             if (currentProductImages.length > 0) {
                 currentImageIndex = (currentImageIndex + 1) % currentProductImages.length;
@@ -2346,7 +2458,6 @@ productElement.innerHTML = `
             }
         }
         
-        // Вспомогательные функции для преобразования значений
         function getSizeLabel(size) {
             const sizes = {
                 'small': 'Маленький',
@@ -2374,18 +2485,15 @@ productElement.innerHTML = `
             return materials[material] || material;
         }
         
-        // Закрытие модального окна товара
         function closeProductModal() {
             productModalOverlay.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
         
-        // Добавление товара в корзину
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
             
-            // Проверяем, есть ли товар уже в корзине
             const existingItem = cart.find(item => item.id === productId);
             
             if (existingItem) {
@@ -2401,36 +2509,33 @@ productElement.innerHTML = `
                 });
             }
             
-            // Сохраняем корзину в localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Обновляем счетчик корзины
             updateCartCount();
-            
-            // Показываем уведомление
             showMessage(`Товар "${product.name}" добавлен в корзину!`);
         }
         
-        // Обновление счетчика корзины
         function updateCartCount() {
             const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.querySelector('.cart-count').textContent = count;
+            const display = document.querySelector('.cart-count');
+            if (display) {
+                display.textContent = count;
+                display.classList.remove('bump');
+                void display.offsetWidth; // триггер рефлоу
+                display.classList.add('bump');
+            }
         }
         
-        // Открытие корзины
         function openCart() {
             renderCartItems();
             cartOverlay.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
         
-        // Закрытие корзины
         function closeCartOverlay() {
             cartOverlay.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
         
-        // Отображение товаров в корзине
         function renderCartItems() {
             cartItems.innerHTML = '';
             
@@ -2456,7 +2561,7 @@ productElement.innerHTML = `
                 cartItemElement.className = 'cart-item';
                 cartItemElement.innerHTML = `
                     <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.innerHTML='<i class=\"fas fa-box\"></i>
+                        <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.innerHTML='<i class=\"fas fa-box\"></i>'">
                     </div>
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
@@ -2477,7 +2582,6 @@ productElement.innerHTML = `
             
             cartTotal.textContent = `${total.toLocaleString()} ₽`;
             
-            // Добавляем обработчики для кнопок изменения количества и удаления
             document.querySelectorAll('.decrease-quantity').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const productId = parseInt(this.getAttribute('data-id'));
@@ -2500,7 +2604,6 @@ productElement.innerHTML = `
             });
         }
         
-        // Обновление количества товара в корзине
         function updateCartItemQuantity(productId, change) {
             const itemIndex = cart.findIndex(item => item.id === productId);
             
@@ -2508,32 +2611,22 @@ productElement.innerHTML = `
             
             cart[itemIndex].quantity += change;
             
-            // Если количество стало 0 или меньше, удаляем товар
             if (cart[itemIndex].quantity <= 0) {
                 cart.splice(itemIndex, 1);
             }
             
-            // Сохраняем корзину
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Обновляем отображение
             updateCartCount();
             renderCartItems();
         }
         
-        // Удаление товара из корзины
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
-            
-            // Сохраняем корзину
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Обновляем отображение
             updateCartCount();
             renderCartItems();
         }
         
-        // Очистка корзины
         function clearCart() {
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -2542,7 +2635,6 @@ productElement.innerHTML = `
             showMessage('Корзина очищена');
         }
         
-        // Открытие формы оформления заказа
         function openCheckoutForm() {
             if (cart.length === 0) {
                 showMessage('Добавьте товары в корзину перед оформлением заказа', 'error');
@@ -2554,260 +2646,158 @@ productElement.innerHTML = `
             document.body.style.overflow = 'hidden';
         }
         
-        // Закрытие формы оформления заказа
         function closeCheckoutForm() {
             checkoutFormOverlay.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
         
-        // Отправка заказа - ОБНОВЛЕННАЯ ВЕРСИЯ
-        // ФУНКЦИЯ ОФОРМЛЕНИЯ ЗАКАЗА - НОВАЯ ВЕРСИЯ
-async function submitOrder(e) {
-    e.preventDefault();
-    
-    console.log('[Заказ] Начало обработки...');
-    
-    // 1. ПРОВЕРКА ДАННЫХ
-    const name = document.getElementById('customerName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
-    const address = document.getElementById('customerAddress').value.trim();
-    
-    if (!name || !phone || !address) {
-        showMessage('Заполните все обязательные поля (имя, телефон, адрес)', 'error');
-        return;
-    }
-    
-    if (cart.length === 0) {
-        showMessage('Корзина пуста', 'error');
-        return;
-    }
-    
-    // 2. ПОДГОТОВКА ДАННЫХ
-    const orderId = 'ORD-' + Date.now();
-    const orderTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    const orderData = {
-        orderId: orderId,
-        name: name,
-        phone: phone,
-        email: document.getElementById('customerEmail').value.trim() || 'не указан',
-        address: address,
-        comment: document.getElementById('orderComment').value.trim() || 'нет',
-        cart: cart,
-        total: orderTotal,
-        date: new Date().toLocaleString('ru-RU'),
-        timestamp: Date.now()
-    };
-    
-    console.log('Данные заказа:', orderData);
-    
-    // 3. ПОКАЗЫВАЕМ ИНДИКАТОР ЗАГРУЗКИ
-    const submitBtn = orderForm.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Отправка...';
-    submitBtn.disabled = true;
-    
-    let telegramSent = false;
-    let googleSheetsSent = false;
-    let localSaved = false;
-    
-    try {
-        // 4. ОТПРАВКА В ТЕЛЕГРАМ (ПЕРВЫЙ ПРИОРИТЕТ)
-        console.log('Отправка в Telegram...');
-        const telegramResult = await sendToTelegram(orderData);
-        
-        if (telegramResult.success) {
-            telegramSent = true;
-            console.log('✅ Telegram: успешно отправлено');
-        } else {
-            console.log('⚠️ Telegram: не отправлено', telegramResult.error);
-        }
-        
-        // 5. ОТПРАВКА В GOOGLE SHEETS (ВТОРОЙ ПРИОРИТЕТ)
-        console.log('Отправка в Google Sheets...');
-        const googleResult = await sendToGoogleSheets(orderData);
-        
-        if (googleResult.success) {
-            googleSheetsSent = true;
-            console.log('✅ Google Sheets: успешно отправлено');
-        } else {
-            console.log('⚠️ Google Sheets: не отправлено', googleResult.message);
-        }
-        
-        // 6. СОХРАНЕНИЕ В LOCALSTORAGE (ЗАПАСНОЙ ВАРИАНТ)
-        if (!telegramSent && !googleSheetsSent) {
-            console.log('Сохранение в localStorage...');
-            const saveResult = saveOrderToLocalStorage(orderData);
+        // Функция показа сообщений
+        function showMessage(text, type = 'success') {
+            const msg = type === 'success' ? successMessage : errorMessage;
+            msg.innerHTML = text;
+            msg.style.display = 'block';
+            msg.className = `message ${type}`;
             
-            if (saveResult) {
-                localSaved = true;
-                console.log('✅ localStorage: сохранено');
-            }
-        }
-        
-        // 7. ПОКАЗЫВАЕМ РЕЗУЛЬТАТ ПОЛЬЗОВАТЕЛЮ
-        if (telegramSent || googleSheetsSent) {
-            // Если хотя бы один способ сработал
-            let message = `✅ Заказ #${orderId} оформлен! `;
-            
-            if (telegramSent && googleSheetsSent) {
-                message += 'Данные отправлены. Мы вам перезвоним!';
-            } else if (telegramSent) {
-                message += 'Мы получили вашу заявку в Telegram. Скоро свяжемся!';
-            } else if (googleSheetsSent) {
-                message += 'Заказ записан. Менеджер свяжется с вами!';
-            }
-            
-            showMessage(message, 'success');
-            
-            // Очищаем корзину и форму
             setTimeout(() => {
-                clearCart();
-                closeCheckoutForm();
-                orderForm.reset();
+                msg.style.display = 'none';
+            }, 4000);
+        }
+        
+        // ОТПРАВКА ЗАКАЗА
+        async function submitOrder(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+            
+            if (!name || !phone || !address) {
+                showMessage('Заполните все обязательные поля (имя, телефон, адрес)', 'error');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                showMessage('Корзина пуста', 'error');
+                return;
+            }
+            
+            const orderId = 'ORD-' + Date.now();
+            const orderTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const orderData = {
+                orderId: orderId,
+                name: name,
+                phone: phone,
+                email: document.getElementById('customerEmail').value.trim() || 'не указан',
+                address: address,
+                comment: document.getElementById('orderComment').value.trim() || 'нет',
+                cart: cart,
+                total: orderTotal,
+                date: new Date().toLocaleString('ru-RU'),
+                timestamp: Date.now()
+            };
+            
+            const submitBtn = orderForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Отправка в Telegram
+                const telegramResult = await sendToTelegram(orderData);
                 
-                // Показываем главную страницу
-                if (document.getElementById('homeButton')) {
-                    loadPage('home');
+                if (telegramResult.success) {
+                    showMessage(`✅ Заказ #${orderId} оформлен! Мы свяжемся с вами.`, 'success');
+                    
+                    setTimeout(() => {
+                        clearCart();
+                        closeCheckoutForm();
+                        orderForm.reset();
+                        loadPage('home');
+                    }, 3000);
+                } else {
+                    // Если Telegram не работает, сохраняем локально
+                    saveOrderToLocalStorage(orderData);
+                    showMessage(`📋 Заказ #${orderId} сохранен! Позвоните нам: +7 (495) 123-45-67`, 'success');
+                    
+                    setTimeout(() => {
+                        closeCheckoutForm();
+                    }, 5000);
                 }
-            }, 3000);
+            } catch (error) {
+                showMessage('❌ Ошибка при оформлении заказа. Позвоните нам: +7 (495) 123-45-67', 'error');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // Функция отправки в Telegram
+        async function sendToTelegram(orderData) {
+            const botToken = 'YOUR_BOT_TOKEN'; // Замените на реальный токен
+            const chatId = 'YOUR_CHAT_ID'; // Замените на реальный chat_id
             
-        } else if (localSaved) {
-            // Если сохранилось только локально
-            showMessage(`📋 Заказ #${orderId} сохранен! Пожалуйста, позвоните нам: +7 (495) 123-45-67`, 'success');
+            if (botToken === 'YOUR_BOT_TOKEN') {
+                return { success: false, error: 'Telegram не настроен' };
+            }
             
-            setTimeout(() => {
-                closeCheckoutForm();
-            }, 5000);
-        } else {
-            // Если вообще ничего не сработало
-            showMessage('❌ Ошибка при оформлении заказа. Позвоните нам: +7 (495) 123-45-67', 'error');
+            try {
+                const message = `
+🛒 НОВЫЙ ЗАКАЗ
+─────────────────
+📋 Номер: ${orderData.orderId}
+👤 Имя: ${orderData.name}
+📱 Телефон: ${orderData.phone}
+📧 Email: ${orderData.email}
+📍 Адрес: ${orderData.address}
+💬 Комментарий: ${orderData.comment}
+
+📦 Товары:
+${orderData.cart.map(item => `  • ${item.name} × ${item.quantity} = ${(item.price * item.quantity).toLocaleString()} ₽`).join('\n')}
+
+💰 Итого: ${orderData.total.toLocaleString()} ₽
+📅 Дата: ${orderData.date}
+─────────────────
+                `;
+                
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                if (response.ok) {
+                    return { success: true };
+                } else {
+                    return { success: false, error: 'Ошибка API Telegram' };
+                }
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
         }
         
-    } catch (error) {
-        console.error('Критическая ошибка:', error);
-        showMessage('❌ Непредвиденная ошибка. Пожалуйста, позвоните нам', 'error');
-    } finally {
-        // Восстанавливаем кнопку
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-}
-
-
-
-
-
-// ФУНКЦИЯ ОТПРАВКИ В GOOGLE SHEETS
-// ФУНКЦИЯ ОТПРАВКИ В GOOGLE SHEETS (РАБОЧАЯ ВЕРСИЯ)
-async function sendToGoogleSheets(orderData) {
-    try {
-        console.log('Начинаем отправку в Google Sheets...');
-        
-        // 1. ПОДГОТОВКА ДАННЫХ ДЛЯ GOOGLE SHEETS
-        const sheetData = {
-            orderId: orderData.orderId,
-            name: orderData.name,
-            phone: orderData.phone,
-            email: orderData.email || 'не указан',
-            address: orderData.address,
-            comment: orderData.comment || 'нет',
-            total: orderData.total,
-            itemsCount: orderData.cart.reduce((sum, item) => sum + item.quantity, 0),
-            itemsList: orderData.cart.map(item => 
-                `${item.name} (${item.quantity} шт.)`
-            ).join('; '),
-            date: orderData.date,
-            timestamp: orderData.timestamp,
-            source: 'Уютный Сон - сайт'
-        };
-        
-        console.log('Данные для Google Sheets:', sheetData);
-        
-        // 2. ИСПОЛЬЗУЕМ ПРАВИЛЬНЫЙ МЕТОД ДЛЯ CORS
-        // URL вашего Google Apps Script
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxX9FDlVRHNGIr4kvtbrC5JX33TZ3bBsVGkZSvdHo6WFIqKTywm0vQid6pD8PRV5pkQxA/exec';
-        
-        // 3. СОЗДАЕМ ФОРМУ ДЛЯ ОТПРАВКИ (ОБХОД CORS)
-        const formData = new FormData();
-        
-        // Добавляем все данные в форму
-        Object.keys(sheetData).forEach(key => {
-            formData.append(key, sheetData[key]);
-        });
-        
-        // 4. ОТПРАВЛЯЕМ ЧЕРЕЗ GOOGLE APPS SCRIPT (С УЧЕТОМ CORS)
-        // Используем метод, который не требует CORS
-        const response = await fetch(scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors', // Важно! Режим без CORS
-            body: formData
-        });
-        
-        // В режиме 'no-cors' мы не можем прочитать ответ, но запрос отправляется
-        console.log('Запрос в Google Sheets отправлен (режим no-cors)');
-        
-        // 5. ДОПОЛНИТЕЛЬНЫЙ СПОСОБ - ОТПРАВКА ЧЕРЕЗ GET
-        // Создаем URL с параметрами
-        const params = new URLSearchParams();
-        Object.keys(sheetData).forEach(key => {
-            params.append(key, sheetData[key]);
-        });
-        
-        const getUrl = `${scriptUrl}?${params.toString()}`;
-        
-        // Отправляем GET запрос (он всегда работает)
-        try {
-            await fetch(getUrl, { mode: 'no-cors' });
-            console.log('Данные также отправлены через GET');
-        } catch (getError) {
-            console.log('GET запрос не удался, но это нормально');
+        // Функция сохранения в localStorage
+        function saveOrderToLocalStorage(orderData) {
+            try {
+                const existingOrders = JSON.parse(localStorage.getItem('uyutniyson_orders')) || [];
+                existingOrders.push(orderData);
+                
+                if (existingOrders.length > 50) {
+                    existingOrders.shift();
+                }
+                
+                localStorage.setItem('uyutniyson_orders', JSON.stringify(existingOrders));
+                localStorage.setItem('last_order', JSON.stringify(orderData));
+                return true;
+            } catch (error) {
+                return false;
+            }
         }
-        
-        return {
-            success: true,
-            message: 'Данные отправлены в Google Sheets'
-        };
-        
-    } catch (error) {
-        console.warn('Ошибка при отправке в Google Sheets:', error.message);
-        
-        // Даже если есть ошибка, считаем успехом (данные могут уйти)
-        return {
-            success: true, // Меняем на true, так как в режиме no-cors ошибки могут быть ложными
-            message: 'Данные отправлены (возможно, в фоновом режиме)'
-        };
-    }
-}
-
-
-// ФУНКЦИЯ СОХРАНЕНИЯ В LOCALSTORAGE
-function saveOrderToLocalStorage(orderData) {
-    try {
-        // 1. ПОЛУЧАЕМ СУЩЕСТВУЮЩИЕ ЗАКАЗЫ
-        const existingOrders = JSON.parse(localStorage.getItem('uyutniyson_orders')) || [];
-        
-        // 2. ДОБАВЛЯЕМ НОВЫЙ ЗАКАЗ
-        existingOrders.push(orderData);
-        
-        // 3. СОХРАНЯЕМ (МАКСИМУМ 50 ЗАКАЗОВ)
-        if (existingOrders.length > 50) {
-            existingOrders.shift(); // Удаляем самый старый
-        }
-        
-        localStorage.setItem('uyutniyson_orders', JSON.stringify(existingOrders));
-        
-        // 4. ТАКЖЕ СОХРАНЯЕМ ОТДЕЛЬНО ПОСЛЕДНИЙ ЗАКАЗ
-        localStorage.setItem('last_order', JSON.stringify(orderData));
-        
-        console.log('Заказ сохранен в localStorage:', orderData.orderId);
-        return true;
-        
-    } catch (error) {
-        console.error('Ошибка сохранения в localStorage:', error);
-        return false;
-    }
-}
     </script>
     <script src="telegrM.js"></script>
 </body>
